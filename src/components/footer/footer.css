@@ -1,0 +1,5 @@
+.recent-sec li,
+.category li,
+.rated li {
+  list-style: none;
+}
