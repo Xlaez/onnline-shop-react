@@ -3,7 +3,7 @@ import Input from '../../components/auth/inputs/Index';
 import { RegisterForm } from './Style';
 import Button from '../../components/auth/button/Index';
 import { api } from '../../utils/Api'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Toaster from '../../utils/Toaster';
 
 export default function Register() {
@@ -16,79 +16,89 @@ export default function Register() {
     }
     const prop = 'register'
 
-    let [ inputs, setInputs ] = useState( {} );
-    let [ error, setError ] = useState( 'none' );
+    let [inputs, setInputs] = useState({});
+    let [error, setError] = useState('none');
 
     const wrongCred = "This account already exist"
     const handleReistration = () => {
-        setInputs( {
-            name: document.getElementById( 'name' ).value,
-            email: document.getElementById( 'email' ).value,
-            mobile: document.getElementById( 'mobile' ).value,
-            password: document.getElementById( 'password' ).value,
-            Cpassword: document.getElementById( 'confirmPassword' ).value,
-        } );
+        setInputs({
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            mobile: document.getElementById('mobile').value,
+            password: document.getElementById('password').value,
+            Cpassword: document.getElementById('confirmPassword').value,
+        });
     };
 
     async function submitForm() {
         const body = new FormData();
         const { name, email, mobile, password } = inputs;
 
-        body.append( 'name', name );
-        body.append( 'email', email );
-        body.append( 'mobile', mobile );
-        body.append( 'password', password );
+        body.append('name', name);
+        body.append('email', email);
+        body.append('mobile', mobile);
+        body.append('password', password);
 
-        const req = await fetch( `${api}/auth`, {
+        const req = await fetch(`${api}/auth`, {
             method: 'POST',
             body,
-        } );
+        });
 
         const res = await req.json();
 
-        if ( req.status === 400 ) {
-            setError( 'wrong-pass' );
-            setTimeout( () => {
-                setError( 'none' );
-            }, 2000 );
+        if (req.status === 400) {
+            setError('wrong-pass');
+            setTimeout(() => {
+                setError('none');
+            }, 2000);
         }
-        if ( req.status === 403 ) {
+        if (req.status === 403) {
             // wrongCred();
-            setError( 'wrong-pass' );
-            setTimeout( () => {
-                setError( 'none' );
-            }, 2000 );
+            setError('wrong-pass');
+            setTimeout(() => {
+                setError('none');
+            }, 2000);
         }
-        if ( req.status === 201 ) {
-            localStorage.setItem( 'x-access-store-user-allow-entry', res.data.token );
-            localStorage.setItem( 'x-access-store-user-allow-entry-subt', res.data.refreshToken );
-            localStorage.setItem( 'x-access-store-user-special', res.data._id )
-            navigate( '/' );
+        if (req.status === 201) {
+            localStorage.setItem('x-access-store-user-allow-entry', res.data.token);
+            localStorage.setItem('x-access-store-user-allow-entry-subt', res.data.refreshToken);
+            localStorage.setItem('x-access-store-user-special', res.data._id)
+            const remainingMilliseconds = 60 * 60 * 24 * 1000;
+            const expiryDate = new Date(
+                new Date().getTime() + remainingMilliseconds
+            );
+            localStorage.setItem('expiryDate', expiryDate.toISOString());
+            if (res.data.admin) {
+                localStorage.setItem('x-access-store-x-x-x-allow-entry-super-level-auth', res.data.admin)
+            } else {
+                localStorage.setItem('x-access-store-x-x-x-allow-entry-super-level-auth', false)
+            }
+            navigate('/');
         };
     }
 
-    const handleRegistrationValidation = ( e ) => {
+    const handleRegistrationValidation = (e) => {
         e.preventDefault();
 
-        if ( inputs.Cpassword !== inputs.password ) {
-            setError( 'not-match' );
-            setTimeout( () => {
-                setError( 'none' );
-            }, 2000 );
-        } else if ( inputs.password.length < 7 ) {
-            setError( 'not-allowed' )
-            setTimeout( () => {
-                setError( 'none' )
-            }, 2000 );
+        if (inputs.Cpassword !== inputs.password) {
+            setError('not-match');
+            setTimeout(() => {
+                setError('none');
+            }, 2000);
+        } else if (inputs.password.length < 7) {
+            setError('not-allowed')
+            setTimeout(() => {
+                setError('none')
+            }, 2000);
         }
         else {
-            setError( 'none' );
+            setError('none');
             submitForm();
         }
     }
 
     return (
-        <RegisterForm onSubmit={( e ) => handleRegistrationValidation( e )}>
+        <RegisterForm onSubmit={(e) => handleRegistrationValidation(e)}>
 
             {
                 error === 'not-match' && (
@@ -114,6 +124,7 @@ export default function Register() {
                 <Input props={prop} setInputs={setInputs} />
                 <Button props={prop} handleReistration={handleReistration} />
             </div>
+            <span>Already an account owner? <Link to="/login">Signin here... </Link></span>
             {
                 error === 'wrong-pass' && (
                     <Toaster props={wrongCred} />

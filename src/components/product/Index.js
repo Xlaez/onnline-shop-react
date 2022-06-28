@@ -9,73 +9,78 @@ import Loader from '../../utils/Loader';
 
 function SingleProduct() {
     const navigate = useNavigate()
-    const id = localStorage.getItem( 'x-user-store-view-single-prod' );
-    const [ data, setData ] = useState( {} );
-    const [ products, setProducts ] = useState( [] );
-    const [ exclusiveProducts, setExclusiveProducts ] = useState( [] );
+    const id = localStorage.getItem('x-user-store-view-single-prod');
+    const [data, setData] = useState({});
+    const [soldOut, setSoldOut] = useState(false);
+    const [products, setProducts] = useState([]);
+    const [exclusiveProducts, setExclusiveProducts] = useState([]);
 
-    async function getProduct( id ) {
-        const req = await fetch( `${api}/prod/${id}` );
+    async function getProduct(id) {
+        const req = await fetch(`${api}/prod/${id}`);
         const res = await req.json();
-        if ( !req.ok ) {
-            console.log( 'error' );
+        if (!req.ok) {
+            console.log('error');
         } else {
-            setData( res.data );
+            setData(res.data);
+            setSoldOut(res.soldOut);
         };
     };
 
     async function getExclusiveProducts() {
-        const req = await fetch( `${api}/prod/exclusive` );
+        const req = await fetch(`${api}/prod/exclusive`);
         const res = await req.json();
-        setExclusiveProducts( res.data );
+        setExclusiveProducts(res.data);
     }
 
-    async function getSimilarProducts( category ) {
-        const req = await fetch( `${api}/prod/category/${category}` );
+    async function getSimilarProducts(category) {
+        const req = await fetch(`${api}/prod/category/${category}`);
         const res = await req.json();
-        setProducts( res.data );
+        setProducts(res.data);
     };
 
-    async function handleAddToCart( id ) {
+    async function handleAddToCart(id) {
         const body = new FormData();
-        body.append( 'productId', id );
+        body.append('productId', id);
         const headers = {
-            Authorization: localStorage.getItem( 'x-access-store-user-allow-entry' ),
-            useraccess: localStorage.getItem( 'x-access-store-user-special' )
+            Authorization: localStorage.getItem('x-access-store-user-allow-entry'),
+            useraccess: localStorage.getItem('x-access-store-user-special')
         }
 
-        const req = await fetch( `${api}/prod/add`, {
+        const req = await fetch(`${api}/prod/add`, {
             method: 'POST',
             body,
             headers,
-        } );
-        if ( req.status === 403 ) {
-            navigate( '/login' );
-        } else if ( req.status === 400 ) {
-            console.log( 'error' );
+        });
+        if (req.status === 403) {
+            navigate('/login');
+        } else if (req.status === 400) {
+            console.log('error');
         } else {
-            if ( req.ok ) {
-                navigate( '/checkout' );
+            if (req.ok) {
+                navigate('/checkout');
             }
         }
     };
 
-    useEffect( () => {
-        getProduct( id );
-    }, [] );
+    useEffect(() => {
+        getProduct(id);
+    }, []);
 
-    useEffect( () => {
+    useEffect(() => {
 
-        getSimilarProducts( data.category );
-    }, [ data ] );
+        getSimilarProducts(data.category);
+    }, [data]);
 
-    useEffect( () => {
+    useEffect(() => {
         getExclusiveProducts();
-    }, [] );
+    }, []);
 
 
     const divStyle = {
         overflow: "hidden",
+    }
+    const underline = {
+        textDecoration: 'line-through'
     }
     return (
         <Fragment>
@@ -85,8 +90,8 @@ function SingleProduct() {
                         <Wrapper>
                             <Container>
                                 <ImageBody>
-                                    {/* <ProductImage src={productData.image} /> */}
-                                    <ProductImage src={`${apiHost}/${data.image}`} />
+                                    <ProductImage src={data.image} />
+                                    {/* <ProductImage src={`${apiHost}/${data.image}`} /> */}
                                 </ImageBody>
                                 <DescriptionBody>
                                     <h1 style={heading}>{data.name}</h1>
@@ -96,7 +101,13 @@ function SingleProduct() {
                                         {data.descr}
                                     </Description>
                                     <OrderButtonDiv>
-                                        <OrderButton onClick={() => handleAddToCart( data._id )}>Add to cart</OrderButton>
+                                        {
+                                            soldOut ? (
+                                                <OrderButton style={underline} onClick={() => navigate('/')}>Is sold out</OrderButton>
+                                            ) : (
+                                                <OrderButton onClick={() => handleAddToCart(data._id)}>Add to cart</OrderButton>
+                                            )
+                                        }
                                     </OrderButtonDiv>
                                 </DescriptionBody>
                             </Container>

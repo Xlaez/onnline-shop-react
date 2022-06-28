@@ -1,13 +1,11 @@
-/*eslint-disable*/
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import { ButtonBeautiful, FirstInnerStyle, FirstInnerStyleH1, FirstInnerStyleHeaderBody, SvgCloud, Small1, Small2, AngleRightBtn, ButtonArranger } from './FirstInnerDashStyle'
 
-function FirstInnerDash( { setMode, setInnerBodyMode } ) {
+
+function FirstInnerDash( { setInnerBodyMode } ) {
   const navigate = useNavigate();
-  const handleSwitchState = () => {
-    setMode( "home" );
-  }
+
   const handleAddProduct = () => {
     setInnerBodyMode( "add-product" )
   };
@@ -19,7 +17,7 @@ function FirstInnerDash( { setMode, setInnerBodyMode } ) {
         <ButtonArranger>
           <Small1>Dashboard</Small1>
           <AngleRightBtn />
-          <Small2 onClick={() => { handleSwitchState() }}>Home</Small2>
+          <Small2 onClick={() => navigate( '/' )}>Home</Small2>
           <AngleRightBtn />
           <Small2 onClick={() => setInnerBodyMode( "my-store" )}>My store</Small2>
         </ButtonArranger>

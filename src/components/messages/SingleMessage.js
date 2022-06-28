@@ -2,8 +2,10 @@ import React, { useLayoutEffect, useState } from 'react'
 import { MessageViewWrapper, MessageBody, MessageBox, MessageCred, NoMessage, DeleteMessage } from './Messages';
 import { AngleRightBtn, ButtonArranger, ButtonBeautiful, FirstInnerStyle, FirstInnerStyleH1, FirstInnerStyleHeaderBody, Small1, Small2, SvgCloud } from '../dashUtils/FirstInnerDashStyle'
 import { api } from '../../utils/Api';
+import { useNavigate } from 'react-router-dom';
 
-function SingleMessage( { setMode, setInnerBodyMode } ) {
+function SingleMessage( { setInnerBodyMode } ) {
+    const navigate = useNavigate();
 
     const [ msg, setMsg ] = useState( null );
 
@@ -52,10 +54,12 @@ function SingleMessage( { setMode, setInnerBodyMode } ) {
                     <ButtonArranger>
                         <Small1>Messages</Small1>
                         <AngleRightBtn />
-                        <Small2 onClick={() => setMode( "home" )}>Home</Small2>
+                        <Small2 onClick={() => navigate( '/' )}>Home</Small2>
+                        <AngleRightBtn />
+                        <Small2 onClick={() => setInnerBodyMode( "message" )}>Back</Small2>
                     </ButtonArranger>
                 </FirstInnerStyleHeaderBody>
-                <ButtonBeautiful onClick={() => setMode( "add-product" )}>
+                <ButtonBeautiful onClick={() => setInnerBodyMode( "add-product" )}>
                     <SvgCloud />
                     <span>Add product</span>
                 </ButtonBeautiful>

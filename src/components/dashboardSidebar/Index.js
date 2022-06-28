@@ -1,19 +1,25 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 
-import { AllItems, AnalysysIcon, DashboardIcon, DashboardSidebarWrapper, EmojiSmile, ItemDash, ItemDiv, Items, LogoutIcon, MessageIcon, StoreIcon, UserName, UserNameDiv, ItemsFirst } from './DashSidebar';
+import { AllItems, DashboardIcon, DashboardSidebarWrapper, EmojiSmile, ItemDash, ItemDiv, Items, LogoutIcon, MessageIcon, StoreIcon, UserName, UserNameDiv, ItemsFirst } from './DashSidebar';
 
 //eslint-disable-next-line
-function DashSidebar( { setState, setInnerBodyMode, innerBodyMode } ) {
+function DashSidebar({ setState, setInnerBodyMode, innerBodyMode }) {
     const navigate = useNavigate();
     const handleLogout = () => {
-        localStorage.removeItem( 'x-access-store-user-allow-entry-subt' );
-        localStorage.removeItem( 'x-access-store-user-allow-entry' );
-        navigate( '/login' );
+        localStorage.removeItem('x-access-store-user-allow-entry-subt');
+        localStorage.removeItem('x-access-store-user-allow-entry');
+        localStorage.removeItem('x-access-store-x-x-x-allow-entry-super-level-auth');
+
+        navigate('/login');
     }
 
     const handleStateChange = () => {
-        setInnerBodyMode( null )
+        setInnerBodyMode(null)
+        setState();
+    }
+    const handleChangeToMyStore = (prop) => {
+        setInnerBodyMode(prop);
         setState();
     }
     return (
@@ -28,15 +34,12 @@ function DashSidebar( { setState, setInnerBodyMode, innerBodyMode } ) {
                         <DashboardIcon />
                         <ItemDash >Dashboard</ItemDash>
                     </ItemDiv>
-                    <ItemDiv onClick={() => setInnerBodyMode( 'my-store' )}>
+                    <ItemDiv onClick={() => handleChangeToMyStore('my-store')}>
                         <StoreIcon />
                         <Items>My Store</Items>
                     </ItemDiv>
-                    <ItemDiv>
-                        <AnalysysIcon />
-                        <Items>Analysys</Items>
-                    </ItemDiv>
-                    <ItemDiv onClick={() => setInnerBodyMode( 'message' )}>
+
+                    <ItemDiv onClick={() => handleChangeToMyStore('message')}>
                         <MessageIcon />
                         <Items>Messages</Items>
                     </ItemDiv>

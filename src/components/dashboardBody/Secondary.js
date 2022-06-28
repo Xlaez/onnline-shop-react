@@ -8,34 +8,34 @@ import MyStore from '../store/Index'
 import Messages from '../messages/Index'
 import SingleMessage from '../messages/SingleMessage'
 
-function DashboardInner( { setMode, setInnerBodyMode, innerBodyMode, users, orders, totalOrders } ) {
+function DashboardInner( { setInnerBodyMode, innerBodyMode, users, orders, totalOrders } ) {
 
     return (
         <Fragment>
             {
                 innerBodyMode === 'add-product' && (
-                    <AddPrdouct setInnerBodyMode={setInnerBodyMode} setMode={setMode} />
+                    <AddPrdouct setInnerBodyMode={setInnerBodyMode} />
                 )
             }
             {
                 innerBodyMode === 'my-store' && (
-                    <MyStore setInnerBodyMode={setInnerBodyMode} setMode={setMode} />
+                    <MyStore setInnerBodyMode={setInnerBodyMode} />
                 )
             }
             {
                 innerBodyMode === 'message' && (
-                    <Messages setInnerBodyMode={setInnerBodyMode} setMode={setMode} />
+                    <Messages setInnerBodyMode={setInnerBodyMode} />
                 )
             }
             {
                 innerBodyMode === 'single-message' && (
-                    <SingleMessage setMode={setMode} setInnerBodyMode={setInnerBodyMode} />
+                    <SingleMessage setInnerBodyMode={setInnerBodyMode} />
                 )
             }
             {
                 innerBodyMode === null && (
                     <InnerWrapper>
-                        <FirstInnerDash setMode={setMode} setInnerBodyMode={setInnerBodyMode} />
+                        <FirstInnerDash setInnerBodyMode={setInnerBodyMode} />
                         <SecondaryDash users={users} totalOrders={totalOrders} />
                         <ThirdInnerdash orders={orders} />
                     </InnerWrapper>

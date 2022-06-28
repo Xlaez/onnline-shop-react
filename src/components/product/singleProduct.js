@@ -16,6 +16,10 @@ padding:5rem 0 5rem 0;
 display:grid;
 grid-template-columns:repeat(2, 1fr);
 grid-gap:1rem;
+.out-of-stock{
+    color:red !important;
+    cursor:not-allowed;
+}
 @media(max-width:440px){
     padding:3rem 0 3rem 0;
     grid-template-columns:repeat(1,1fr);

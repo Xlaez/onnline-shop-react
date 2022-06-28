@@ -5,6 +5,7 @@ background:#e7e7e7;
 padding:2rem;
 border-top-left-radius:20px;
 height:100%;
+overflow-y:auto;
 @media(max-width:440px){
     height:100vh;
 }

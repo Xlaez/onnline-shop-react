@@ -19,6 +19,18 @@ strong{
     color:#fff;
     text-transform:uppercase;
 }
+span{
+    color:#093c66;
+    text-transform:lowercase;
+    font-size:0.9rem;
+    text-align:center;
+    font-family: 'Overlock', cursive;
+    a{
+        text-decoration:none;
+        color:#093c66;
+        opacity:0.9;
+    }
+}
 .form-body{
     border-radius:5px;
     border:1px solid #ffffff37;

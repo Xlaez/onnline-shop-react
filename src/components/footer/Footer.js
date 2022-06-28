@@ -62,16 +62,16 @@ function Footer() {
                     <div className='category'>
                         <strong>Categories</strong>
                         <ul>
-                            <li><FaAngleRight /> Women wears</li>
-                            <li><FaAngleRight /> Men wears</li>
-                            <li><FaAngleRight /> Children wears</li>
+                            <li onClick={() => navigate( '/all-product' )}><FaAngleRight /> Women wears</li>
+                            <li onClick={() => navigate( '/all-product' )}><FaAngleRight /> Men wears</li>
+                            <li onClick={() => navigate( '/all-product' )}><FaAngleRight /> Children wears</li>
                         </ul>
                     </div>
                     <div className='rated'>
-                        <strong>Most bought</strong>
+                        <strong>Officials</strong>
                         <ul>
-                            <li>Varrati Balansiaga</li>
-                            <li>Varrati Balansiaga</li>
+                            <li>C.E.O <FaAngleRight /> Mrs Bessi Neka </li>
+                            <li>Developer <FaAngleRight /> Utibeabasi Ekong </li>
                         </ul>
                     </div>
                 </FirstFooter>
@@ -80,6 +80,7 @@ function Footer() {
                         <span> &copy; 2022 Shoppify, All Rights Reserved </span>
                     </div>
                     <div>
+
                         <ul>
                             <li> <Link to="https://facebook.com">
                                 <BsFacebook /></Link> </li>

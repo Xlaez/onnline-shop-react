@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { BsCloudArrowUp } from 'react-icons/bs'
+import { BsCloudArrowUp, BsShop } from 'react-icons/bs'
 import { FaAngleRight } from 'react-icons/fa'
 
 export const FirstInnerStyle = styled.div`
@@ -81,12 +81,6 @@ transition:all 1s ease-out;
 export const SvgCloud = styled( BsCloudArrowUp )`
 color:#fff;
 `
-
-/* font-family: 'Nunito', sans-serif; */
-/* font-family: 'Overlock', cursive; */
-/*#e31837*/
-/* *{
-    background:#3a8bcd;
-    color:#093c66;
-} */
-/* #093c66 */
+export const SvgStore = styled( BsShop )`
+color:#fff;
+`

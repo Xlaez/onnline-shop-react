@@ -13,14 +13,14 @@ export const SidebarContainer = styled.aside`
   top: 0;
   font-family: 'Nunito', sans-serif;
   transition: 0.3s ease-in-out;
-  right: ${({ isOpen }) => (isOpen ? '0' : '-1000px')};
+  right: ${( { isOpen } ) => ( isOpen ? '0' : '-1000px' )};
 
   @media screen and (max-width: 400px) {
     width: 100%;
   }
 `;
 
-export const CloseIcon = styled(FaTimes)`
+export const CloseIcon = styled( FaTimes )`
   color: #fff;
 `;
 
@@ -46,7 +46,7 @@ export const SidebarMenu = styled.div`
   }
 `;
 
-export const SidebarLink = styled(Link)`
+export const SidebarLink = styled( Link )`
   display: flex;
   align-itesm: center;
   justify-content: center;
@@ -70,7 +70,7 @@ export const SideBtnWrap = styled.div`
   justify-content: center;
 ` ;
 
-export const SidebarRoute = styled(Link)`
+export const SidebarRoute = styled( Link )`
   background: #e31837;
   white-space: nowrap;
   padding: 16px 64px;
@@ -81,6 +81,25 @@ export const SidebarRoute = styled(Link)`
   cursor: pointer;
   transition: 0.2s ease-in-out;
   text-decoration: none;
+
+  &:hover {
+    transition: 0.2 ease-in-out;
+    background: #fff;
+    color: #010606;
+  }
+`;
+
+export const SidebarRouteSignout = styled.li`
+  background: #e31837;
+  white-space: nowrap;
+  padding: 16px 64px;
+  color: #fff;
+  font-size: 16px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+  list-style: none;
 
   &:hover {
     transition: 0.2 ease-in-out;

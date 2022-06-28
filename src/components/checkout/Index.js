@@ -15,55 +15,55 @@ function CheckoutPage() {
     }
 
 
-    const [ cart, setCart ] = useState( [] );
-    const [ total, setTotal ] = useState( [] );
-    const token = localStorage.getItem( 'x-access-store-user-allow-entry' );
+    const [cart, setCart] = useState([]);
+    const [total, setTotal] = useState([]);
+    const token = localStorage.getItem('x-access-store-user-allow-entry');
     const headers = {
         Authorization: token,
     };
 
     async function getCart() {
-        const req = await fetch( `${api}/prod/get`, {
+        const req = await fetch(`${api}/prod/get`, {
             headers,
-        } );
+        });
         const res = await req.json();
-        if ( req.status === 403 ) {
-            naviagte( '/login' );
-        } else if ( req.status === 400 ) {
-            console.log( 'error' );
+        if (req.status === 403) {
+            naviagte('/login');
+        } else if (req.status === 400) {
+            console.log('error');
         } else {
-            if ( req.ok ) {
-                setCart( res.data );
+            if (req.ok) {
+                setCart(res.data);
             }
         }
     };
 
-    async function handleRemoveFromCart( id ) {
+    async function handleRemoveFromCart(id) {
         const body = new FormData();
-        body.append( 'productId', id );
-        const req = await fetch( `${api}/prod/remove`, {
+        body.append('productId', id);
+        const req = await fetch(`${api}/prod/remove`, {
             method: 'POST',
             headers,
             body,
-        } );
-        if ( !req.ok ) {
-            console.log( 'erorr' )
+        });
+        if (!req.ok) {
+            console.log('erorr')
         } else {
             getCart();
         }
     };
 
-    useEffect( () => {
+    useEffect(() => {
         getCart();
-    }, [], [ cart ] );
+    }, [], [cart]);
 
-    useEffect( () => {
+    useEffect(() => {
         var emptyArray = [];
-        cart.forEach( i => {
-            emptyArray.push( Math.floor( i.productId.newPrice * i.quantity ).toFixed( 2 ) )
-        } );
-        setTotal( emptyArray )
-    }, [ cart ] );
+        cart.forEach(i => {
+            emptyArray.push(Math.floor(i.productId.newPrice * i.quantity).toFixed(2))
+        });
+        setTotal(emptyArray)
+    }, [cart]);
 
     return (
         <Fragment>
@@ -84,11 +84,11 @@ function CheckoutPage() {
                                         <th className='remove-x'>Remove</th>
                                     </tr>
                                     {
-                                        cart.map( ( i ) => {
+                                        cart.map((i) => {
                                             return (
                                                 <tr key={i.productId._id} className='table-row-2'>
-                                                    {/* <td><img className='item-x-x' style={control} src={i.productId.image} alt="" /></td> */}
-                                                    <td><img className='item-x-x' style={control} src={`${apiHost}/${i.productId.image}`} alt="" /></td>
+                                                    <td><img className='item-x-x' style={control} src={i.productId.image} alt="" /></td>
+                                                    {/* <td><img className='item-x-x' style={control} src={`${apiHost}/${i.productId.image}`} alt="" /></td> */}
                                                     <td className='descr-x-x'>
                                                         <h5>{i.productId.name}</h5>
                                                     </td>
@@ -102,14 +102,14 @@ function CheckoutPage() {
                                                         <h5>{i.quantity}</h5>
                                                     </td>
                                                     <td className='total-x-x'>
-                                                        <h5>#{Math.floor( i.productId.newPrice * i.quantity ).toFixed( 2 )}</h5>
+                                                        <h5>#{Math.floor(i.productId.newPrice * i.quantity).toFixed(2)}</h5>
                                                     </td>
-                                                    <td className='remove-x-x' onClick={() => handleRemoveFromCart( i.productId._id )}>
+                                                    <td className='remove-x-x' onClick={() => handleRemoveFromCart(i.productId._id)}>
                                                         <FaTimes />
                                                     </td>
                                                 </tr>
                                             )
-                                        } )
+                                        })
                                     }
                                 </tbody>
                             </Table>
@@ -123,7 +123,7 @@ function CheckoutPage() {
                                         <th className='remove-x'>Remove</th>
                                     </tr>
                                     {
-                                        cart.map( ( i ) => {
+                                        cart.map((i) => {
                                             return (
                                                 <tr key={i.productId._id} className='table-row-2'>
 
@@ -138,14 +138,14 @@ function CheckoutPage() {
                                                         <h5>{i.quantity}</h5>
                                                     </td>
                                                     <td className='total-x-x'>
-                                                        <h5>#{Math.floor( i.productId.newPrice * i.quantity ).toFixed( 2 )}</h5>
+                                                        <h5>#{Math.floor(i.productId.newPrice * i.quantity).toFixed(2)}</h5>
                                                     </td>
-                                                    <td className='remove-x-x' onClick={() => handleRemoveFromCart( i.productId._id )}>
+                                                    <td className='remove-x-x' onClick={() => handleRemoveFromCart(i.productId._id)}>
                                                         <FaTimes />
                                                     </td>
                                                 </tr>
                                             )
-                                        } )
+                                        })
                                     }
                                 </tbody>
                             </Table2>
@@ -156,7 +156,7 @@ function CheckoutPage() {
                     <NoCart>
                         <h2>Your cart is empty</h2>
                         <BsCartFill />
-                        <button onClick={() => naviagte( '/all-product' )}>Add Products</button>
+                        <button onClick={() => naviagte('/all-product')}>Add Products</button>
                     </NoCart>
                 )
             }

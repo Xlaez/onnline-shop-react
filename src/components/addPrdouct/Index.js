@@ -1,14 +1,15 @@
 import React, { useCallback, useMemo, useState, useEffect } from 'react'
 import { AddPrdouctButton, AddPrdouctGrid, AddPrdouctForm, AddPrdouctLabel, AddPrdouctInputs, AddPrdouctWrapper, AddPrdouctSelect } from './addPrdouct'
 // import DragAndDrop from '../dragAndDrop/Index'
-import { AngleRightBtn, ButtonArranger, ButtonBeautiful, FirstInnerStyle, FirstInnerStyleH1, FirstInnerStyleHeaderBody, Small1, Small2, SvgCloud } from '../dashUtils/FirstInnerDashStyle'
+import { AngleRightBtn, ButtonArranger, ButtonBeautiful, FirstInnerStyle, FirstInnerStyleH1, FirstInnerStyleHeaderBody, Small1, Small2, SvgStore } from '../dashUtils/FirstInnerDashStyle'
 import { acceptStyle, activeStyle, baseStyle, DragAndDropWrapper, rejectStyle, viewImage } from '../dragAndDrop/DragAndDrop';
 import { useDropzone } from 'react-dropzone';
 import { api } from '../../utils/Api';
+import { useNavigate } from 'react-router-dom';
 
 //eslint-disable-next-line
-function AddPrdouct( { setInnerBodyMode, setMode } ) {
-    // const [productData, setProductData] = useState()
+function AddPrdouct( { setInnerBodyMode } ) {
+    const navigate = useNavigate();
     const [ files, setFiles ] = useState( [] );
     const onDrop = useCallback( acceptedFiles => {
         setFiles( acceptedFiles.map( file => Object.assign( file, {
@@ -96,12 +97,12 @@ function AddPrdouct( { setInnerBodyMode, setMode } ) {
                     <ButtonArranger>
                         <Small1>Add product</Small1>
                         <AngleRightBtn />
-                        <Small2 onClick={() => setMode( "home" )}>Home</Small2>
+                        <Small2 onClick={() => navigate( '/' )}>Home</Small2>
                     </ButtonArranger>
                 </FirstInnerStyleHeaderBody>
-                <ButtonBeautiful>
-                    <SvgCloud />
-                    <span>Add product</span>
+                <ButtonBeautiful onClick={() => setInnerBodyMode( 'my-store' )}>
+                    <SvgStore />
+                    <span>My Store</span>
 
                 </ButtonBeautiful>
             </FirstInnerStyle>

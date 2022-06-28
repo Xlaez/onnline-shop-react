@@ -4,8 +4,10 @@ import { AngleRightBtn, ButtonArranger, ButtonBeautiful, FirstInnerStyle, FirstI
 import { Numbers, PeopleFillIcon, PeopleFillIconPack, SecondaryDashIndivdualWrap, SecondaryDashWrapper, TextBeneath, TextFieldGrid } from '../dashUtils/SecondaryDashStyle'
 import { MessageViewWrapper, NoMessage } from './Messages'
 import { api } from '../../utils/Api';
+import { useNavigate } from 'react-router-dom';
 
-function Messages( { setMode, setInnerBodyMode } ) {
+function Messages( { setInnerBodyMode } ) {
+    const navigate = useNavigate();
 
     const [ messages, setMessages ] = useState( [] );
 
@@ -41,10 +43,10 @@ function Messages( { setMode, setInnerBodyMode } ) {
                     <ButtonArranger>
                         <Small1>Messages</Small1>
                         <AngleRightBtn />
-                        <Small2 onClick={() => setMode( "home" )}>Home</Small2>
+                        <Small2 onClick={() => navigate( '/' )}>Home</Small2>
                     </ButtonArranger>
                 </FirstInnerStyleHeaderBody>
-                <ButtonBeautiful onClick={() => setMode( "add-product" )}>
+                <ButtonBeautiful onClick={() => setInnerBodyMode( "add-product" )}>
                     <SvgCloud />
                     <span>Add product</span>
                 </ButtonBeautiful>
